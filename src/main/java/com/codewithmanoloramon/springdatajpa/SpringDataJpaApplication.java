@@ -58,11 +58,31 @@ public class SpringDataJpaApplication {
 			List<Student1> student1s = studentRepositor.findAll();
 			student1s.forEach(System.out::println);
 
-			System.out.println("Delete andy");
-			studentRepositor.deleteById(1L);
+//			System.out.println("Delete andy");
+//			studentRepositor.deleteById(1L);
 
 			System.out.println("Number of students");
 			System.out.println(studentRepositor.count());
+
+			// Implement from Student Repository
+			studentRepositor
+					.findStudent1ByEnail("mandy-jones@gmail.com")
+					.ifPresentOrElse(
+							System.out::println,
+							() -> System.out.println("Student with andy-joe@gmail.com not found!")
+					);
+
+			studentRepositor
+					.selectStudent1WhereFirstNameAndAgeGreaterOrEqual("Andy", 21)
+					.forEach(System.out::println);
+
+			studentRepositor
+					.selectStudentWhereFirstNameAndAgeGreaterOrEqualNative("Andy", 21)
+					.forEach(System.out::println);
+
+
+			System.out.println("Delete Mandy 2");
+			System.out.println(studentRepositor.deleteStudent1ById(2L));
 		};
 	}
 }
