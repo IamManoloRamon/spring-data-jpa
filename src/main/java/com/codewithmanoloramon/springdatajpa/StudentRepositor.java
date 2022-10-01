@@ -1,8 +1,9 @@
 package com.codewithmanoloramon.springdatajpa;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 
@@ -10,7 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface StudentRepositor extends JpaRepository<Student1, Long> {
+public interface StudentRepositor extends PagingAndSortingRepository<Student1, Long> {
     @Query("SELECT s FROM Student1 s WHERE s.email = ?1")
     Optional<Student1> findStudent1ByEnail(String email);
     @Query("SELECT s FROM  Student1  s WHERE s.firstName = ?1 AND s.age >= ?2")
