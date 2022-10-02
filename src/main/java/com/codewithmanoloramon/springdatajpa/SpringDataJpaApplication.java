@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootApplication
@@ -48,20 +49,28 @@ public class SpringDataJpaApplication {
 			faker.number().numberBetween(17, 55)
 		);
 
+		student1.addBook(new Book("Clean code", LocalDateTime.now().minusDays(4)));
+		student1.addBook(new Book("Think and Grow Rich", LocalDateTime.now()));
+		student1.addBook(new Book("Spring Data JPA", LocalDateTime.now().minusYears(1)));
+
 		StudentIdCard studentIdCard = new StudentIdCard(
 			"123456789",
 			student1
 		);
 
-		studentIdCardRepository.save(studentIdCard);
+		student1.setStudentIdCard(studentIdCard);
 
-		studentRepositor.findById(1L)
-				.ifPresent(System.out::println);
+		studentRepositor.save(student1);
 
-		studentIdCardRepository.findById(1L)
-				.ifPresent(System.out::println);
-
-		studentIdCardRepository.deleteById(1L);
+//		studentIdCardRepository.save(studentIdCard);
+//
+//		studentRepositor.findById(1L)
+//				.ifPresent(System.out::println);
+//
+//		studentIdCardRepository.findById(1L)
+//				.ifPresent(System.out::println);
+//
+//		studentRepositor.deleteById(1L);
 	}
 	private static void generateStudents(StudentRepositor studentRepositor) {
 		Student1 andy = new Student1(

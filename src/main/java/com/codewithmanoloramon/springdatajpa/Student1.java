@@ -2,6 +2,9 @@ package com.codewithmanoloramon.springdatajpa;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Student1")
@@ -56,6 +59,21 @@ public class Student1 {
     )
     private int age;
 
+    @OneToOne(
+            mappedBy = "student",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
+    )
+    private StudentIdCard studentIdCard;
+
+    @OneToMany(
+            mappedBy = "student",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY
+    )
+    private List<Book> books = new ArrayList<>();
+
     public Student1() {
     }
 
@@ -104,6 +122,20 @@ public class Student1 {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void addBook(Book book){
+        if (!this.books.contains(book))
+            this.books.add(book);
+            book.setStudent(this);
+    }
+
+    public void setStudentIdCard(StudentIdCard studentIdCard) {
+        this.studentIdCard = studentIdCard;
+    }
+
+    public List<Book> getBook() {
+        return books;
     }
 
     @Override
