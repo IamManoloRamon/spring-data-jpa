@@ -1,9 +1,16 @@
 package com.codewithmanoloramon.springdatajpa;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class EnrolmentId  {
+@Embeddable
+public class EnrolmentId implements Serializable {
+    @Column(name = "student_id")
     private Long studentId;
+
+    @Column(name = "course_id")
     private Long courseId;
 
     public EnrolmentId() {
@@ -30,5 +37,8 @@ public class EnrolmentId  {
         this.courseId = courseId;
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId, courseId);
+    }
 }

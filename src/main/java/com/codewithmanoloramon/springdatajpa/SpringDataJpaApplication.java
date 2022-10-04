@@ -60,7 +60,30 @@ public class SpringDataJpaApplication {
 
 		student1.setStudentIdCard(studentIdCard);
 
+		student1.addEnrolment(new Enrolment(
+				new EnrolmentId(1L, 1L),
+				student1,
+				new Course("Computer Science", "IT"),
+				LocalDateTime.now()
+		));
+
+		student1.addEnrolment(new Enrolment(
+				new EnrolmentId(1L, 2L),
+				student1,
+				new Course("Algorithm and Data Structure", "IT"),
+				LocalDateTime.now()
+		));
+
 		studentRepositor.save(student1);
+
+		studentRepositor.findById(1L)
+				.ifPresent(s -> {
+					System.out.println("Fetch book lazy...");
+					List<Book> books = student1.getBook();
+					books.forEach(book -> {
+						System.out.println(s.getFirstName() + " borrowed " + book.getBookName());
+					});
+				});
 
 //		studentIdCardRepository.save(studentIdCard);
 //

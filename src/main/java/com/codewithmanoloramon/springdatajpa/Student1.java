@@ -74,6 +74,11 @@ public class Student1 {
     )
     private List<Book> books = new ArrayList<>();
 
+    @OneToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            mappedBy = "student"
+    )
+    private  List<Enrolment> enrolments = new ArrayList<>();
     public Student1() {
     }
 
@@ -130,6 +135,10 @@ public class Student1 {
             book.setStudent(this);
     }
 
+    public void addEnrolment(Enrolment enrolment){
+        if (!enrolments.contains(enrolment))
+            enrolments.add(enrolment);
+    }
     public void setStudentIdCard(StudentIdCard studentIdCard) {
         this.studentIdCard = studentIdCard;
     }
